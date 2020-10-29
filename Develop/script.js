@@ -1,9 +1,21 @@
 $(document).ready(function () {
-  // essentially tells engine to load 1)html & 2)css first.
-  //display current day & time.
-  $('#currentDay').text(moment().format('MMMM Do YYYY, h:mm:ss a'));
+  // runs html & css first
 
-  //Assign saveBtn click listener for user input and time stamp??
+  //Displaying current date/time
+  var currentDate =
+    moment().format('dddd') + ' ' + moment().format('Do MMM YYYY');
+  var currentHour = moment().format('h:mm:ss a');
+
+  var interval = setInterval(function () {
+    var momentNow = moment();
+    $('#currentDay').html(
+      momentNow.format('YYYY MMMM DD') +
+        ' ' +
+        momentNow.format('dddd').substring(0, 3).toUpperCase()
+    );
+    $('#currentDay').html(currentDate + ' ' + momentNow.format('hh:mm:ss A'));
+  }, 100);
+  //Assign saveBtn click listener for user input and time stamp
   $('.saveBtn').on('click', function () {
     //get nearby values.
     console.log(this);
@@ -33,7 +45,7 @@ $(document).ready(function () {
       var blockHour = parseInt($(this).attr('id').split('hour')[1]);
       console.log(blockHour, currentHour);
 
-      //check if we've moved past this time
+      //Verifies past, present, and future times
       if (blockHour < currentHour) {
         $(this).addClass('past');
         $(this).removeClass('future');
